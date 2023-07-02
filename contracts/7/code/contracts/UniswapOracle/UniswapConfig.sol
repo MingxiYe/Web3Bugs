@@ -3,7 +3,7 @@
 pragma solidity ^0.6.10;
 pragma experimental ABIEncoderV2;
 
-import "openzeppelin-solidity/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 interface CErc20 {
     function underlying() external view returns (address);
