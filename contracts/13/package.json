@@ -1,7 +1,7 @@
 {
   "name": "realitycards",
   "version": "1.0.0",
-  "description": "",
+  "description": "- $45,000 USDC main award pot - $15,000 USDC worth of Reality Cards tokens - Join [C4 Discord](https://discord.gg/EY5dvm3evD) to register - Submit findings [using the C4 form](https://code423n4.com/2021-06-realitycards-contest/submit) - [Read our guidelines for more details](https://code423n4.com/compete) - Starts June 10 00:00 UTC - Ends June 16 23:59 UTC",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -45,7 +45,7 @@
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "eth-gas-reporter": "^0.2.22",
-    "hardhat": "^2.3.0",
+    "hardhat": "^2.16.1",
     "hardhat-gas-reporter": "^1.0.4",
     "prettier": "^1.19.1",
     "prettier-plugin-solidity": "^1.0.0-beta.11",
