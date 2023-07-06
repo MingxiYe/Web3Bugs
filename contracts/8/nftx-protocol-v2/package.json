@@ -14,5 +14,16 @@
     "@openzeppelin/contracts-upgradeable": "^3.4.1",
     "@openzeppelin/hardhat-upgrades": "^1.6.0",
     "hardhat-gas-reporter": "^1.0.4"
-  }
+  },
+  "description": "## Getting Started",
+  "version": "1.0.0",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }

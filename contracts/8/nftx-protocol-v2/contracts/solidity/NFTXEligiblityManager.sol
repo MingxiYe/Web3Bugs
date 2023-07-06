@@ -5,6 +5,8 @@ import "./interface/INFTXEligibility.sol";
 import "./util/OwnableUpgradeable.sol";
 import "./proxy/ClonesUpgradeable.sol";
 
+pragma experimental ABIEncoderV2;
+
 contract NFTXEligibilityManager is OwnableUpgradeable {
   INFTXVaultFactory public nftxVaultFactory;
 
