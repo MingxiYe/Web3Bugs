@@ -1,0 +1,17 @@
+{
+  "name": "19",
+  "version": "1.0.0",
+  "description": "- $22,500 USDC award pot - $2,500 USDC gas optimization award pot - Join [C4 Discord](https://discord.gg/EY5dvm3evD) to register - Submit findings [using the C4 form](https://code423n4.com/2021-07-connext-contest/submit) - [Read our guidelines for more details](https://code423n4.com/compete) - Starts 2021-07-09 00:00 UTC - Ends 2021-07-11 23:59 UTC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.16.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.2"
+  }
+}
