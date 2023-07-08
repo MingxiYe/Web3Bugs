@@ -31,7 +31,6 @@
     "@openzeppelin/test-helpers": "^0.5.6",
     "chai": "^4.3.4",
     "ethers": "^5.4.1",
-    "hardhat": "^2.4.1",
     "hardhat-gas-reporter": "^1.0.4",
     "random": "^3.0.6",
     "seedrandom": "^3.0.5"
@@ -43,6 +42,7 @@
     "@tenderly/hardhat-tenderly": "^1.0.12",
     "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.3.0",
+    "hardhat": "^2.16.1",
     "hardhat-abi-exporter": "^2.2.1",
     "hardhat-docgen": "^1.1.1",
     "hardhat-spdx-license-identifier": "^2.0.3",
@@ -51,5 +51,10 @@
     "rescript": "^9.1.4",
     "solhint": "^3.3.6",
     "truffle": "^5.3.0"
-  }
+  },
+  "description": "https://float.capital",
+  "directories": {
+    "test": "test"
+  },
+  "author": ""
 }
