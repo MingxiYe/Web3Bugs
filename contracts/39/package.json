@@ -1,0 +1,14 @@
+{
+  "name": "39",
+  "version": "1.0.0",
+  "description": "- $67,500 worth of ETH main award pot - $7,500 worth of ETH gas optimization award pot - Join [C4 Discord](https://discord.gg/EY5dvm3evD) to register - Submit findings [using the C4 form](https://code423n4.com/2021-09-swivel-contest/submit) - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens) - Starts September 30, 2021 00:00 UTC - Ends October 6, 2021 23:59 UTC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.16.1"
+  }
+}
