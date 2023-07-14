@@ -1,29 +1,29 @@
 {
-    "name": "",
-    "version": "1.0.0",
-    "description": "",
-    "main": "truffle-config.js",
-    "directories": {
-        "test": "test"
-    },
-    "scripts": {
-        "test": "truffle test",
-        "coverage": "truffle run coverage",
-        "compile": "rm -rf ./build && truffle compile"
-    },
-    "repository": {
-        "type": "",
-        "url": ""
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": ""
-    },
-    "homepage": "",
-    "dependencies": {
-        "@openzeppelin/contracts": "^4.3.2",
-        "@openzeppelin/test-helpers": "^0.5.6",
-        "solidity-coverage": "^0.7.17"
-    }
+  "name": "52",
+  "version": "1.0.0",
+  "description": "- $71,250 USDC main award pot - $3,750 USDC gas optimization award pot - Join [C4 Discord](https://discord.gg/code4rena) to register - Submit findings [using the C4 form](https://code423n4.com/2021-11-vader-protocol-contest/submit) - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens) - Starts November 9, 2021 00:00 UTC - Ends November 15, 2021 23:59 UTC",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "coverage": "truffle run coverage",
+    "compile": "rm -rf ./build && truffle compile"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.2",
+    "@openzeppelin/test-helpers": "^0.5.6",
+    "solidity-coverage": "^0.7.17"
+  },
+  "devDependencies": {
+    "hardhat": "^2.16.1"
+  }
 }
