@@ -11,31 +11,6 @@ require("solidity-coverage");
 require("dotenv").config();
 
 module.exports = {
-    networks: {
-        hardhat: {
-            accounts: {
-                mnemonic: "test test test test test test test test test test test junk"
-            },
-            forking: {
-                url: "https://eth-mainnet.alchemyapi.io/v2/" + process.env.ALCHEMY_API_KEY,
-                blockNumber: 12542012
-            },
-            hardfork: "berlin",
-            allowUnlimitedContractSize: true
-        },
-        rinkeby: {
-            url: "https://rinkeby.infura.io/v3/" + process.env.INFURA_ID,
-            accounts: {
-                mnemonic: process.env.MNEMONIC_TEST
-            }
-        },
-        kovan: {
-            url: "https://kovan.infura.io/v3/" + process.env.INFURA_ID,
-            accounts: {
-                mnemonic: process.env.MNEMONIC_TEST
-            }
-        }
-    },
     solidity: {
         compilers: [
             {
