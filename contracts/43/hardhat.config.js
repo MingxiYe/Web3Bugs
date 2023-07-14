@@ -49,19 +49,5 @@ module.exports = {
     clear: true,
     flat: true,
     spacing: 2,
-  },
-  defaultNetwork: "hardhat",
-  networks: {
-    hardhat: {
-      chainId: 1,
-      forking: {
-        url: "http://you.rpc.url.here",
-        blockNumber: 13182263
-      }
-    },
-    test: {
-      url: "http://127.0.0.1:8545/"
-    }
-
   }
 };
