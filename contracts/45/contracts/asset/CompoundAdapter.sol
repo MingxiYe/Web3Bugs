@@ -12,9 +12,15 @@ abstract contract CToken is IERC20Upgradeable {
 
     function mint(uint256 mintAmount) external virtual returns (uint256);
 
-    function redeemUnderlying(uint256 redeemAmount) external virtual returns (uint256);
+    function redeemUnderlying(uint256 redeemAmount)
+        external
+        virtual
+        returns (uint256);
 
-    function balanceOfUnderlying(address owner) external virtual returns (uint256);
+    function balanceOfUnderlying(address owner)
+        external
+        virtual
+        returns (uint256);
 
     function exchangeRateStored() external view virtual returns (uint256);
 }
@@ -55,22 +61,37 @@ contract CompoundAdapter is Controller, IMoneyMarketAdapter {
         floorMap[tokenAddress] = floor;
     }
 
-    function setCeiling(address tokenAddress, uint256 ceiling) external onlyAdmin {
+    function setCeiling(address tokenAddress, uint256 ceiling)
+        external
+        onlyAdmin
+    {
         ceilingMap[tokenAddress] = ceiling;
     }
 
-    function mapTokenToCToken(address tokenAddress, address cTokenAddress) external onlyAdmin {
+    function mapTokenToCToken(address tokenAddress, address cTokenAddress)
+        external
+        onlyAdmin
+    {
         tokenToCToken[tokenAddress] = cTokenAddress;
     }
 
-    function getRate(address tokenAddress) external view override returns (uint256) {
+    function getRate(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         address cTokenAddress = tokenToCToken[tokenAddress];
         CToken cToken = CToken(cTokenAddress);
 
         return cToken.supplyRatePerBlock();
     }
 
-    function deposit(address tokenAddress) external override checkTokenSupported(tokenAddress) {
+    function deposit(address tokenAddress)
+        external
+        override
+        checkTokenSupported(tokenAddress)
+    {
         // get cToken
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         address cTokenAddress = tokenToCToken[tokenAddress];
@@ -107,16 +128,26 @@ contract CompoundAdapter is Controller, IMoneyMarketAdapter {
         address cTokenAddress = tokenToCToken[tokenAddress];
         CToken cToken = CToken(cTokenAddress);
 
-        uint256 result = cToken.redeemUnderlying(cToken.balanceOfUnderlying(address(this)));
+        uint256 result = cToken.redeemUnderlying(
+            cToken.balanceOfUnderlying(address(this))
+        );
         require(result == 0, "Error redeeming the cToken");
         token.safeTransfer(recipient, token.balanceOf(address(this)));
     }
 
-    function claimTokens(address tokenAddress, address recipient) external override onlyAssetManager {
+    function claimTokens(address tokenAddress, address recipient)
+        external
+        override
+        onlyAssetManager
+    {
         _claimTokens(tokenAddress, recipient);
     }
 
-    function getSupply(address tokenAddress) external override returns (uint256) {
+    function getSupply(address tokenAddress)
+        external
+        override
+        returns (uint256)
+    {
         address cTokenAddress = tokenToCToken[tokenAddress];
         CToken cToken = CToken(cTokenAddress);
 
@@ -128,7 +159,12 @@ contract CompoundAdapter is Controller, IMoneyMarketAdapter {
         return cToken.balanceOfUnderlying(address(this));
     }
 
-    function getSupplyView(address tokenAddress) external view override returns (uint256) {
+    function getSupplyView(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         address cTokenAddress = tokenToCToken[tokenAddress];
         CToken cToken = CToken(cTokenAddress);
 
@@ -142,7 +178,12 @@ contract CompoundAdapter is Controller, IMoneyMarketAdapter {
         return (balance * exchangeRate) / 10**18;
     }
 
-    function supportsToken(address tokenAddress) external view override returns (bool) {
+    function supportsToken(address tokenAddress)
+        external
+        view
+        override
+        returns (bool)
+    {
         return _supportsToken(tokenAddress);
     }
 

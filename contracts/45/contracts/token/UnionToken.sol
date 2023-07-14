@@ -13,14 +13,18 @@ import "./Whitelistable.sol";
 contract UnionToken is ERC20VotesComp, ERC20Burnable, Whitelistable {
     //The EIP-712 typehash for the contract's domain
     bytes32 public constant DOMAIN_TYPEHASH =
-        keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+        keccak256(
+            "EIP712Domain(string name,uint256 chainId,address verifyingContract)"
+        );
 
     //The EIP-712 typehash for the delegation struct used by the contract
     bytes32 public constant DELEGATION_TYPEHASH =
         keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
 
     bytes32 public constant PERMIT_TYPEHASH =
-        keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+        keccak256(
+            "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
+        );
 
     /// @notice Minimum time between mints
     uint256 public constant minimumTimeBetweenMints = 1 days * 365;
@@ -38,7 +42,10 @@ contract UnionToken is ERC20VotesComp, ERC20Burnable, Whitelistable {
         string memory symbol,
         uint256 mintingAllowedAfter_
     ) ERC20(name, symbol) ERC20Permit(name) {
-        require(mintingAllowedAfter_ >= block.timestamp, "minting can only begin after deployment");
+        require(
+            mintingAllowedAfter_ >= block.timestamp,
+            "minting can only begin after deployment"
+        );
 
         //If the balance is not 0, the data has been migrated and it is not a newly deployed contract. At this time, INIT_CIRCULATING tokens are not pre-mined
         if (balanceOf(msg.sender) == 0) {
@@ -50,7 +57,11 @@ contract UnionToken is ERC20VotesComp, ERC20Burnable, Whitelistable {
         whitelist(msg.sender);
     }
 
-    function mint(address dst, uint256 amount) external onlyOwner returns (bool) {
+    function mint(address dst, uint256 amount)
+        external
+        onlyOwner
+        returns (bool)
+    {
         require(amount <= (totalSupply() * mintCap) / 100, "exceeded mint cap");
 
         _mint(dst, amount);
@@ -58,15 +69,24 @@ contract UnionToken is ERC20VotesComp, ERC20Burnable, Whitelistable {
         return true;
     }
 
-    function _mint(address account, uint256 amount) internal override(ERC20, ERC20Votes) {
+    function _mint(address account, uint256 amount)
+        internal
+        override(ERC20, ERC20Votes)
+    {
         super._mint(account, amount);
-        require(block.timestamp >= mintingAllowedAfter, "minting not allowed yet");
+        require(
+            block.timestamp >= mintingAllowedAfter,
+            "minting not allowed yet"
+        );
 
         // record the mint
         mintingAllowedAfter = minimumTimeBetweenMints + block.timestamp;
     }
 
-    function _burn(address account, uint256 amount) internal override(ERC20, ERC20Votes) {
+    function _burn(address account, uint256 amount)
+        internal
+        override(ERC20, ERC20Votes)
+    {
         super._burn(account, amount);
     }
 
@@ -78,7 +98,10 @@ contract UnionToken is ERC20VotesComp, ERC20Burnable, Whitelistable {
         super._beforeTokenTransfer(from, to, amount);
 
         if (whitelistEnabled) {
-            require(isWhitelisted(msg.sender) || to == address(0), "Whitelistable: address not whitelisted");
+            require(
+                isWhitelisted(msg.sender) || to == address(0),
+                "Whitelistable: address not whitelisted"
+            );
         }
     }
 

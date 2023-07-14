@@ -11,14 +11,20 @@ interface IAssetManager {
      *  @param tokenAddress ERC20 token address
      *  @return Lending pool balance
      */
-    function getPoolBalance(address tokenAddress) external view returns (uint256);
+    function getPoolBalance(address tokenAddress)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Returns the amount of the lending pool balance minus the amount of total staked.
      *  @param tokenAddress ERC20 token address
      *  @return Amount can be borrowed
      */
-    function getLoanableAmount(address tokenAddress) external view returns (uint256);
+    function getLoanableAmount(address tokenAddress)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Get the total amount of tokens deposited to all the integrated underlying protocols without side effects.
@@ -32,14 +38,20 @@ interface IAssetManager {
      *  @param tokenAddress ERC20 token address
      *  @return Total market balance
      */
-    function totalSupplyView(address tokenAddress) external view returns (uint256);
+    function totalSupplyView(address tokenAddress)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Check if there is an underlying protocol available for the given ERC20 token.
      *  @param tokenAddress ERC20 token address
      *  @return Whether is supported
      */
-    function isMarketSupported(address tokenAddress) external view returns (bool);
+    function isMarketSupported(address tokenAddress)
+        external
+        view
+        returns (bool);
 
     /**
      *  @dev Deposit tokens to AssetManager, and those tokens will be passed along to adapters to deposit to integrated asset protocols if any is available.
@@ -97,7 +109,8 @@ interface IAssetManager {
      *  @param tokenAddress ERC20 token address
      *  @param percentages Proportion
      */
-    function rebalance(address tokenAddress, uint256[] calldata percentages) external;
+    function rebalance(address tokenAddress, uint256[] calldata percentages)
+        external;
 
     /**
      *  @dev Claim the tokens left on AssetManager balance, in case there are tokens get stuck here.
@@ -136,7 +149,10 @@ interface IAssetManager {
      *  @param marketId MoneyMarkets array index
      *  @return tokenSupply
      */
-    function getMoneyMarket(address tokenAddress, uint256 marketId) external view returns (uint256, uint256);
+    function getMoneyMarket(address tokenAddress, uint256 marketId)
+        external
+        view
+        returns (uint256, uint256);
 
     /**
      *  @dev debt write off

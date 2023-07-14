@@ -58,15 +58,35 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param oldInterestRateModel Old interest rate model address
      *  @param newInterestRateModel New interest rate model address
      */
-    event LogNewMarketInterestRateModel(address oldInterestRateModel, address newInterestRateModel);
+    event LogNewMarketInterestRateModel(
+        address oldInterestRateModel,
+        address newInterestRateModel
+    );
 
-    event LogMint(address minter, uint256 underlyingAmount, uint256 uTokenAmount);
+    event LogMint(
+        address minter,
+        uint256 underlyingAmount,
+        uint256 uTokenAmount
+    );
 
-    event LogRedeem(address redeemer, uint256 redeemTokensIn, uint256 redeemAmountIn, uint256 redeemAmount);
+    event LogRedeem(
+        address redeemer,
+        uint256 redeemTokensIn,
+        uint256 redeemAmountIn,
+        uint256 redeemAmount
+    );
 
-    event LogReservesAdded(address reserver, uint256 actualAddAmount, uint256 totalReservesNew);
+    event LogReservesAdded(
+        address reserver,
+        uint256 actualAddAmount,
+        uint256 totalReservesNew
+    );
 
-    event LogReservesReduced(address receiver, uint256 reduceAmount, uint256 totalReservesNew);
+    event LogReservesReduced(
+        address receiver,
+        uint256 reduceAmount,
+        uint256 totalReservesNew
+    );
 
     /**
      *  @dev Event borrow
@@ -87,12 +107,18 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @dev modifier limit member
      */
     modifier onlyMember(address account) {
-        require(IUserManager(userManager).checkIsMember(account), "UToken: caller is not a member");
+        require(
+            IUserManager(userManager).checkIsMember(account),
+            "UToken: caller is not a member"
+        );
         _;
     }
 
     modifier onlyAssetManager() {
-        require(msg.sender == assetManager, "UToken: caller is not assetManager");
+        require(
+            msg.sender == assetManager,
+            "UToken: caller is not assetManager"
+        );
         _;
     }
 
@@ -113,10 +139,14 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         uint256 overdueBlocks_,
         address admin_
     ) public initializer {
-        require(initialExchangeRateMantissa_ > 0, "initial exchange rate must be greater than zero.");
+        require(
+            initialExchangeRateMantissa_ > 0,
+            "initial exchange rate must be greater than zero."
+        );
         require(address(underlying_) != address(0), "underlying token is zero");
         require(
-            reserveFactorMantissa_ >= 0 && reserveFactorMantissa_ <= RESERVE_FACTORY_MAX_MANTISSA,
+            reserveFactorMantissa_ >= 0 &&
+                reserveFactorMantissa_ <= RESERVE_FACTORY_MAX_MANTISSA,
             "reserveFactorMantissa error"
         );
         uErc20 = uErc20_;
@@ -192,13 +222,20 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  Accept claims only from the admin
      *  @param newInterestRateModel New interest rate model address
      */
-    function setInterestRateModel(address newInterestRateModel) external onlyAdmin {
+    function setInterestRateModel(address newInterestRateModel)
+        external
+        onlyAdmin
+    {
         _setInterestRateModelFresh(newInterestRateModel);
     }
 
-    function setReserveFactor(uint256 reserveFactorMantissa_) external onlyAdmin {
+    function setReserveFactor(uint256 reserveFactorMantissa_)
+        external
+        onlyAdmin
+    {
         require(
-            reserveFactorMantissa_ >= 0 && reserveFactorMantissa_ <= RESERVE_FACTORY_MAX_MANTISSA,
+            reserveFactorMantissa_ >= 0 &&
+                reserveFactorMantissa_ <= RESERVE_FACTORY_MAX_MANTISSA,
             "reserveFactorMantissa error"
         );
         reserveFactorMantissa = reserveFactorMantissa_;
@@ -221,7 +258,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param account Member address
      *  @return lastRepay
      */
-    function getLastRepay(address account) public view returns (uint256 lastRepay) {
+    function getLastRepay(address account)
+        public
+        view
+        returns (uint256 lastRepay)
+    {
         lastRepay = accountBorrows[account].lastRepay;
     }
 
@@ -230,7 +271,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param account Member address
      *  @return interestIndex
      */
-    function getInterestIndex(address account) public view returns (uint256 interestIndex) {
+    function getInterestIndex(address account)
+        public
+        view
+        returns (uint256 interestIndex)
+    {
         interestIndex = accountBorrows[account].interestIndex;
     }
 
@@ -239,7 +284,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param account Member address
      *  @return isOverdue
      */
-    function checkIsOverdue(address account) public view returns (bool isOverdue) {
+    function checkIsOverdue(address account)
+        public
+        view
+        returns (bool isOverdue)
+    {
         if (getBorrowed(account) == 0) {
             isOverdue = false;
         } else {
@@ -290,7 +339,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param account Member address
      *  @return borrowed
      */
-    function getBorrowed(address account) public view returns (uint256 borrowed) {
+    function getBorrowed(address account)
+        public
+        view
+        returns (uint256 borrowed)
+    {
         borrowed = accountBorrows[account].principal;
     }
 
@@ -308,7 +361,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param account Member address
      *  @return Borrowed amount
      */
-    function borrowBalanceStoredInternal(address account) internal view returns (uint256) {
+    function borrowBalanceStoredInternal(address account)
+        internal
+        view
+        returns (uint256)
+    {
         BorrowSnapshot memory loan = accountBorrows[account];
 
         /* If borrowBalance = 0 then borrowIndex is likely also 0.
@@ -318,7 +375,8 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
             return 0;
         }
 
-        uint256 principalTimesIndex = (loan.principal + loan.interest) * borrowIndex;
+        uint256 principalTimesIndex = (loan.principal + loan.interest) *
+            borrowIndex;
         return principalTimesIndex / loan.interestIndex;
     }
 
@@ -328,7 +386,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      */
     function borrowRatePerBlock() public view returns (uint256) {
         uint256 borrowRateMantissa = interestRateModel.getBorrowRate();
-        require(borrowRateMantissa <= BORROW_RATE_MAX_MANTISSA, "borrow rate is absurdly high");
+        require(
+            borrowRateMantissa <= BORROW_RATE_MAX_MANTISSA,
+            "borrow rate is absurdly high"
+        );
         return borrowRateMantissa;
     }
 
@@ -368,7 +429,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @param account Member address
      *  @return Interest amount
      */
-    function calculatingInterest(address account) public view returns (uint256) {
+    function calculatingInterest(address account)
+        public
+        view
+        returns (uint256)
+    {
         BorrowSnapshot memory loan = accountBorrows[account];
 
         if (loan.principal == 0) {
@@ -379,9 +444,12 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         uint256 currentBlockNumber = getBlockNumber();
         uint256 blockDelta = currentBlockNumber - accrualBlockNumber;
         uint256 simpleInterestFactor = borrowRate * blockDelta;
-        uint256 borrowIndexNew = (simpleInterestFactor * borrowIndex) / WAD + borrowIndex;
+        uint256 borrowIndexNew = (simpleInterestFactor * borrowIndex) /
+            WAD +
+            borrowIndex;
 
-        uint256 principalTimesIndex = (loan.principal + loan.interest) * borrowIndexNew;
+        uint256 principalTimesIndex = (loan.principal + loan.interest) *
+            borrowIndexNew;
         uint256 balance = principalTimesIndex / loan.interestIndex;
 
         return balance - accountBorrows[account].principal;
@@ -393,18 +461,35 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  Borrow amount must in the range of creditLimit, minBorrow, maxBorrow, debtCeiling and not overdue
      *  @param amount Borrow amount
      */
-    function borrow(uint256 amount) external onlyMember(msg.sender) whenNotPaused nonReentrant {
+    function borrow(uint256 amount)
+        external
+        onlyMember(msg.sender)
+        whenNotPaused
+        nonReentrant
+    {
         IAssetManager assetManagerContract = IAssetManager(assetManager);
         require(amount >= minBorrow, "UToken: amount less than loan size min");
 
-        require(amount <= getRemainingLoanSize(), "UToken: amount more than loan global size max");
+        require(
+            amount <= getRemainingLoanSize(),
+            "UToken: amount more than loan global size max"
+        );
 
         uint256 fee = calculatingFee(amount);
-        require(borrowBalanceView(msg.sender) + amount + fee <= maxBorrow, "UToken: amount large than borrow size max");
+        require(
+            borrowBalanceView(msg.sender) + amount + fee <= maxBorrow,
+            "UToken: amount large than borrow size max"
+        );
 
-        require(!checkIsOverdue(msg.sender), "UToken: Member has loans overdue");
+        require(
+            !checkIsOverdue(msg.sender),
+            "UToken: Member has loans overdue"
+        );
 
-        require(amount <= assetManagerContract.getLoanableAmount(underlying), "UToken: Not enough to lend out");
+        require(
+            amount <= assetManagerContract.getLoanableAmount(underlying),
+            "UToken: Not enough to lend out"
+        );
         require(
             uint256(_getCreditLimit(msg.sender)) >= amount + fee,
             "UToken: The loan amount plus fee is greater than credit limit"
@@ -425,23 +510,40 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
 
         accountBorrows[msg.sender].principal += amount + fee;
         uint256 newPrincipal = accountBorrows[msg.sender].principal;
-        IUserManager(userManager).updateLockedData(msg.sender, newPrincipal - oldPrincipal, true);
-        accountBorrows[msg.sender].interest = accountBorrowsNew - accountBorrows[msg.sender].principal;
+        IUserManager(userManager).updateLockedData(
+            msg.sender,
+            newPrincipal - oldPrincipal,
+            true
+        );
+        accountBorrows[msg.sender].interest =
+            accountBorrowsNew -
+            accountBorrows[msg.sender].principal;
         accountBorrows[msg.sender].interestIndex = borrowIndex;
         totalBorrows = totalBorrowsNew;
         // The origination fees contribute to the reserve
         totalReserves += fee;
 
-        require(assetManagerContract.withdraw(underlying, msg.sender, amount), "UToken: Failed to withdraw");
+        require(
+            assetManagerContract.withdraw(underlying, msg.sender, amount),
+            "UToken: Failed to withdraw"
+        );
 
         emit LogBorrow(msg.sender, amount, fee);
     }
 
-    function repayBorrow(uint256 repayAmount) external whenNotPaused nonReentrant {
+    function repayBorrow(uint256 repayAmount)
+        external
+        whenNotPaused
+        nonReentrant
+    {
         _repayBorrowFresh(msg.sender, msg.sender, repayAmount);
     }
 
-    function repayBorrowBehalf(address borrower, uint256 repayAmount) external whenNotPaused nonReentrant {
+    function repayBorrowBehalf(address borrower, uint256 repayAmount)
+        external
+        whenNotPaused
+        nonReentrant
+    {
         _repayBorrowFresh(msg.sender, borrower, repayAmount);
     }
 
@@ -463,7 +565,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         bool isOverdue = checkIsOverdue(borrower);
         uint256 oldPrincipal = accountBorrows[borrower].principal;
         require(accrueInterest(), "UToken: accrue interest failed");
-        require(accrualBlockNumber == getBlockNumber(), "UToken: market not fresh");
+        require(
+            accrualBlockNumber == getBlockNumber(),
+            "UToken: market not fresh"
+        );
 
         uint256 interest = calculatingInterest(borrower);
         uint256 borrowedAmount = borrowBalanceStoredInternal(borrower);
@@ -477,7 +582,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
 
         require(repayAmount > 0, "UToken: repay amount or owed amount is zero");
 
-        require(assetToken.allowance(payer, address(this)) >= repayAmount, "UToken: Not enough allowance to repay");
+        require(
+            assetToken.allowance(payer, address(this)) >= repayAmount,
+            "UToken: Not enough allowance to repay"
+        );
 
         uint256 toReserveAmount;
         uint256 toRedeemableAmount;
@@ -487,7 +595,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
 
             if (isOverdue) {
                 IUserManager(userManager).updateTotalFrozen(borrower, false);
-                IUserManager(userManager).repayLoanOverdue(borrower, underlying, accountBorrows[borrower].lastRepay);
+                IUserManager(userManager).repayLoanOverdue(
+                    borrower,
+                    underlying,
+                    accountBorrows[borrower].lastRepay
+                );
             }
             accountBorrows[borrower].principal = borrowedAmount - repayAmount;
             accountBorrows[borrower].interest = 0;
@@ -511,14 +623,21 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         accountBorrows[borrower].interestIndex = borrowIndex;
         totalBorrows -= repayAmount;
 
-        IUserManager(userManager).updateLockedData(borrower, oldPrincipal - newPrincipal, false);
+        IUserManager(userManager).updateLockedData(
+            borrower,
+            oldPrincipal - newPrincipal,
+            false
+        );
 
         assetToken.safeTransferFrom(payer, address(this), repayAmount);
 
         assetToken.safeApprove(assetManager, 0);
         assetToken.safeApprove(assetManager, repayAmount);
 
-        require(IAssetManager(assetManager).deposit(underlying, repayAmount), "UToken: Deposit failed");
+        require(
+            IAssetManager(assetManager).deposit(underlying, repayAmount),
+            "UToken: Deposit failed"
+        );
 
         emit LogRepay(borrower, repayAmount);
     }
@@ -533,7 +652,16 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         bytes32 s
     ) public whenNotPaused {
         IUErc20 erc20Token = IUErc20(underlying);
-        erc20Token.permit(msg.sender, address(this), nonce, expiry, true, v, r, s);
+        erc20Token.permit(
+            msg.sender,
+            address(this),
+            nonce,
+            expiry,
+            true,
+            v,
+            r,
+            s
+        );
 
         _repayBorrowFresh(msg.sender, borrower, amount);
     }
@@ -548,9 +676,12 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         uint256 blockDelta = currentBlockNumber - accrualBlockNumber;
 
         uint256 simpleInterestFactor = borrowRate * blockDelta;
-        uint256 interestAccumulated = (simpleInterestFactor * totalBorrows) / WAD;
+        uint256 interestAccumulated = (simpleInterestFactor * totalBorrows) /
+            WAD;
         uint256 totalBorrowsNew = interestAccumulated + totalBorrows;
-        uint256 borrowIndexNew = (simpleInterestFactor * borrowIndex) / WAD + borrowIndex;
+        uint256 borrowIndexNew = (simpleInterestFactor * borrowIndex) /
+            WAD +
+            borrowIndex;
 
         accrualBlockNumber = currentBlockNumber;
         borrowIndex = borrowIndexNew;
@@ -574,7 +705,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         uint256 exchangeRate = exchangeRateStored();
         IUErc20 assetToken = IUErc20(underlying);
         uint256 balanceBefore = assetToken.balanceOf(address(this));
-        require(assetToken.allowance(msg.sender, address(this)) >= mintAmount, "UToken: Not enough allowance");
+        require(
+            assetToken.allowance(msg.sender, address(this)) >= mintAmount,
+            "UToken: Not enough allowance"
+        );
         assetToken.safeTransferFrom(msg.sender, address(this), mintAmount);
         uint256 balanceAfter = assetToken.balanceOf(address(this));
         uint256 actualMintAmount = balanceAfter - balanceBefore;
@@ -585,7 +719,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         assetToken.safeApprove(assetManager, 0);
         assetToken.safeApprove(assetManager, actualMintAmount);
 
-        require(IAssetManager(assetManager).deposit(underlying, actualMintAmount), "UToken: Deposit failed");
+        require(
+            IAssetManager(assetManager).deposit(underlying, actualMintAmount),
+            "UToken: Deposit failed"
+        );
 
         emit LogMint(msg.sender, actualMintAmount, mintTokens);
     }
@@ -605,7 +742,11 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      * @dev Accrues interest whether or not the operation succeeds, unless reverted
      * @param redeemAmount The amount of underlying to receive from redeeming uTokens
      */
-    function redeemUnderlying(uint256 redeemAmount) external whenNotPaused nonReentrant {
+    function redeemUnderlying(uint256 redeemAmount)
+        external
+        whenNotPaused
+        nonReentrant
+    {
         require(accrueInterest(), "UToken: accrue interest failed");
         _redeemFresh(payable(msg.sender), 0, redeemAmount);
     }
@@ -622,7 +763,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         uint256 redeemTokensIn,
         uint256 redeemAmountIn
     ) internal {
-        require(redeemTokensIn == 0 || redeemAmountIn == 0, "one of redeemTokensIn or redeemAmountIn must be zero");
+        require(
+            redeemTokensIn == 0 || redeemAmountIn == 0,
+            "one of redeemTokensIn or redeemAmountIn must be zero"
+        );
 
         IAssetManager assetManagerContract = IAssetManager(assetManager);
 
@@ -653,51 +797,85 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         totalRedeemable -= redeemAmount;
         uErc20.burn(redeemer, redeemTokens);
 
-        require(assetManagerContract.withdraw(underlying, redeemer, redeemAmount), "UToken: Failed to withdraw");
+        require(
+            assetManagerContract.withdraw(underlying, redeemer, redeemAmount),
+            "UToken: Failed to withdraw"
+        );
 
         emit LogRedeem(redeemer, redeemTokensIn, redeemAmountIn, redeemAmount);
     }
 
-    function addReserves(uint256 addAmount) external whenNotPaused nonReentrant {
+    function addReserves(uint256 addAmount)
+        external
+        whenNotPaused
+        nonReentrant
+    {
         require(accrueInterest(), "UToken: accrue interest failed");
         IUErc20 assetToken = IUErc20(underlying);
         uint256 balanceBefore = assetToken.balanceOf(address(this));
-        require(assetToken.allowance(msg.sender, address(this)) >= addAmount, "UToken: Not enough allowance");
+        require(
+            assetToken.allowance(msg.sender, address(this)) >= addAmount,
+            "UToken: Not enough allowance"
+        );
         assetToken.safeTransferFrom(msg.sender, address(this), addAmount);
         uint256 balanceAfter = assetToken.balanceOf(address(this));
         uint256 actualAddAmount = balanceAfter - balanceBefore;
 
         uint256 totalReservesNew = totalReserves + actualAddAmount;
         /* Revert on overflow */
-        require(totalReservesNew >= totalReserves, "add reserves unexpected overflow");
+        require(
+            totalReservesNew >= totalReserves,
+            "add reserves unexpected overflow"
+        );
         totalReserves = totalReservesNew;
 
         assetToken.safeApprove(assetManager, 0);
         assetToken.safeApprove(assetManager, balanceAfter);
 
-        require(IAssetManager(assetManager).deposit(underlying, balanceAfter), "UToken: Deposit failed");
+        require(
+            IAssetManager(assetManager).deposit(underlying, balanceAfter),
+            "UToken: Deposit failed"
+        );
 
         emit LogReservesAdded(msg.sender, actualAddAmount, totalReservesNew);
     }
 
-    function removeReserves(address receiver, uint256 reduceAmount) external whenNotPaused nonReentrant onlyAdmin {
+    function removeReserves(address receiver, uint256 reduceAmount)
+        external
+        whenNotPaused
+        nonReentrant
+        onlyAdmin
+    {
         require(accrueInterest(), "UToken: accrue interest failed");
-        require(reduceAmount <= totalReserves, "amount is large than totalReserves");
+        require(
+            reduceAmount <= totalReserves,
+            "amount is large than totalReserves"
+        );
 
         IAssetManager assetManagerContract = IAssetManager(assetManager);
 
         uint256 totalReservesNew = totalReserves - reduceAmount;
         // We checked reduceAmount <= totalReserves above, so this should never revert.
-        require(totalReservesNew <= totalReserves, "reduce reserves unexpected underflow");
+        require(
+            totalReservesNew <= totalReserves,
+            "reduce reserves unexpected underflow"
+        );
 
         totalReserves = totalReservesNew;
 
-        require(assetManagerContract.withdraw(underlying, receiver, reduceAmount), "UToken: Failed to withdraw");
+        require(
+            assetManagerContract.withdraw(underlying, receiver, reduceAmount),
+            "UToken: Failed to withdraw"
+        );
 
         emit LogReservesReduced(receiver, reduceAmount, totalReservesNew);
     }
 
-    function debtWriteOff(address borrower, uint256 amount) external whenNotPaused onlyUserManager {
+    function debtWriteOff(address borrower, uint256 amount)
+        external
+        whenNotPaused
+        onlyUserManager
+    {
         uint256 oldPrincipal = accountBorrows[borrower].principal;
         uint256 repayAmount;
         if (amount > oldPrincipal) {
@@ -727,7 +905,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
         );
         interestRateModel = IInterestRateModel(newInterestRateModel);
 
-        emit LogNewMarketInterestRateModel(oldInterestRateModel, newInterestRateModel);
+        emit LogNewMarketInterestRateModel(
+            oldInterestRateModel,
+            newInterestRateModel
+        );
     }
 
     /**
@@ -744,7 +925,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
      *  @dev Batch update borrower overdue info
      *  @param accounts Borrowers address
      */
-    function batchUpdateOverdueInfos(address[] calldata accounts) external whenNotPaused {
+    function batchUpdateOverdueInfos(address[] calldata accounts)
+        external
+        whenNotPaused
+    {
         address[] memory overdueAccounts = new address[](accounts.length);
         bool[] memory isOverdues = new bool[](accounts.length);
         for (uint256 i = 0; i < accounts.length; i++) {
@@ -753,7 +937,10 @@ contract UToken is Controller, ReentrancyGuardUpgradeable {
                 isOverdues[i] = true;
             }
         }
-        IUserManager(userManager).batchUpdateTotalFrozen(overdueAccounts, isOverdues);
+        IUserManager(userManager).batchUpdateTotalFrozen(
+            overdueAccounts,
+            isOverdues
+        );
     }
 
     /**

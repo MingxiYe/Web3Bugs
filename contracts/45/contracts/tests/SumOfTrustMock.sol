@@ -16,7 +16,11 @@ contract SumOfTrustMock {
         effectiveNumber = effectiveNumber_;
     }
 
-    function getCreditLimit(uint256[] memory vouchs) public view returns (uint256) {
+    function getCreditLimit(uint256[] memory vouchs)
+        public
+        view
+        returns (uint256)
+    {
         if (vouchs.length >= effectiveNumber) {
             uint256 limit;
             for (uint256 i = 0; i < vouchs.length; i++) {
@@ -44,7 +48,9 @@ contract SumOfTrustMock {
             for (uint256 i = 0; i < array.length; i++) {
                 uint256 remainingVouchingAmount;
                 if (array[i].vouchingAmount > array[i].lockedAmount) {
-                    remainingVouchingAmount = array[i].vouchingAmount - array[i].lockedAmount;
+                    remainingVouchingAmount =
+                        array[i].vouchingAmount -
+                        array[i].lockedAmount;
                 } else {
                     remainingVouchingAmount = 0;
                 }
@@ -54,7 +60,9 @@ contract SumOfTrustMock {
                         newLockedAmount = array[i].lockedAmount + remaining;
                         remaining = 0;
                     } else {
-                        newLockedAmount = array[i].lockedAmount + array[i].availableStakingAmount;
+                        newLockedAmount =
+                            array[i].lockedAmount +
+                            array[i].availableStakingAmount;
                         remaining = remaining - array[i].availableStakingAmount;
                     }
                 } else {
@@ -62,7 +70,9 @@ contract SumOfTrustMock {
                         newLockedAmount = array[i].lockedAmount + remaining;
                         remaining = 0;
                     } else {
-                        newLockedAmount = array[i].lockedAmount + remainingVouchingAmount;
+                        newLockedAmount =
+                            array[i].lockedAmount +
+                            remainingVouchingAmount;
                         remaining -= remainingVouchingAmount;
                     }
                 }
@@ -95,7 +105,11 @@ contract SumOfTrustMock {
         effectiveNumber = number;
     }
 
-    function _sortArray(LockedInfo[] memory arr, bool isPositive) private pure returns (LockedInfo[] memory) {
+    function _sortArray(LockedInfo[] memory arr, bool isPositive)
+        private
+        pure
+        returns (LockedInfo[] memory)
+    {
         uint256 l = arr.length;
         for (uint256 i = 0; i < l; i++) {
             for (uint256 j = i + 1; j < l; j++) {

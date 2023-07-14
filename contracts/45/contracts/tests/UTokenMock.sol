@@ -17,7 +17,9 @@ contract UTokenMock is ERC20Upgradeable {
     uint256 internal constant RESERVE_FACTORY_MAX_MANTISSA = 1e18; //Maximum fraction of interest that can be set aside for reserves
 
     bytes32 public constant PERMIT_TYPEHASH =
-        keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+        keccak256(
+            "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
+        );
 
     bool public isOverdue;
 
@@ -57,7 +59,11 @@ contract UTokenMock is ERC20Upgradeable {
         lastRepay = 0;
     }
 
-    function getInterestIndex(address) public pure returns (uint256 interestIndex) {
+    function getInterestIndex(address)
+        public
+        pure
+        returns (uint256 interestIndex)
+    {
         interestIndex = 0;
     }
 
@@ -115,7 +121,11 @@ contract UTokenMock is ERC20Upgradeable {
         return true;
     }
 
-    function balanceOfUnderlying(address owner) external view returns (uint256) {
+    function balanceOfUnderlying(address owner)
+        external
+        view
+        returns (uint256)
+    {
         return balanceOf(owner);
     }
 

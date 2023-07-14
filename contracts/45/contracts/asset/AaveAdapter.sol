@@ -8,13 +8,25 @@ import "../interfaces/IMoneyMarketAdapter.sol";
 import "../Controller.sol";
 
 abstract contract AToken is IERC20Upgradeable {
-    function scaledBalanceOf(address user) external view virtual returns (uint256);
+    function scaledBalanceOf(address user)
+        external
+        view
+        virtual
+        returns (uint256);
 
-    function getScaledUserBalanceAndSupply(address user) external view virtual returns (uint256, uint256);
+    function getScaledUserBalanceAndSupply(address user)
+        external
+        view
+        virtual
+        returns (uint256, uint256);
 
     function scaledTotalSupply() external view virtual returns (uint256);
 
-    function isTransferAllowed(address user, uint256 amount) external view virtual returns (bool);
+    function isTransferAllowed(address user, uint256 amount)
+        external
+        view
+        virtual
+        returns (bool);
 }
 
 abstract contract LendingPool {
@@ -66,16 +78,25 @@ contract AaveAdapter is Controller, IMoneyMarketAdapter {
     LendingPool public lendingPool;
 
     modifier checkTokenSupported(address tokenAddress) {
-        require(_supportsToken(tokenAddress), "AaveAdapter: Token not supported");
+        require(
+            _supportsToken(tokenAddress),
+            "AaveAdapter: Token not supported"
+        );
         _;
     }
 
     modifier onlyAssetManager() {
-        require(msg.sender == assetManager, "AaveAdapter: only asset manager can call");
+        require(
+            msg.sender == assetManager,
+            "AaveAdapter: only asset manager can call"
+        );
         _;
     }
 
-    function __AaveAdapter_init(address _assetManager, LendingPool _lendingPool) public initializer {
+    function __AaveAdapter_init(address _assetManager, LendingPool _lendingPool)
+        public
+        initializer
+    {
         Controller.__Controller_init(msg.sender);
         assetManager = _assetManager;
         lendingPool = _lendingPool;
@@ -89,13 +110,18 @@ contract AaveAdapter is Controller, IMoneyMarketAdapter {
         floorMap[tokenAddress] = floor;
     }
 
-    function setCeiling(address tokenAddress, uint256 ceiling) external onlyAdmin {
+    function setCeiling(address tokenAddress, uint256 ceiling)
+        external
+        onlyAdmin
+    {
         ceilingMap[tokenAddress] = ceiling;
     }
 
     function mapTokenToAToken(address tokenAddress) external onlyAdmin {
         address aTokenAddress;
-        (, , , , , , , aTokenAddress, , , , ) = lendingPool.getReserveData(tokenAddress);
+        (, , , , , , , aTokenAddress, , , , ) = lendingPool.getReserveData(
+            tokenAddress
+        );
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         //AToken aToken = AToken(aTokenAddress);
         token.safeApprove(address(lendingPool), 0);
@@ -103,13 +129,23 @@ contract AaveAdapter is Controller, IMoneyMarketAdapter {
         tokenToAToken[tokenAddress] = aTokenAddress;
     }
 
-    function getRate(address tokenAddress) external view override returns (uint256) {
+    function getRate(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         uint128 currentLiquidityRate;
-        (, , , currentLiquidityRate, , , , , , , , ) = lendingPool.getReserveData(tokenAddress);
+        (, , , currentLiquidityRate, , , , , , , , ) = lendingPool
+            .getReserveData(tokenAddress);
         return uint256(currentLiquidityRate);
     }
 
-    function deposit(address tokenAddress) external override checkTokenSupported(tokenAddress) {
+    function deposit(address tokenAddress)
+        external
+        override
+        checkTokenSupported(tokenAddress)
+    {
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         uint256 amount = token.balanceOf(address(this));
         lendingPool.deposit(tokenAddress, amount, address(this), 0);
@@ -132,7 +168,11 @@ contract AaveAdapter is Controller, IMoneyMarketAdapter {
         lendingPool.withdraw(tokenAddress, UINT256_MAX, recipient);
     }
 
-    function claimTokens(address tokenAddress, address recipient) external override onlyAssetManager {
+    function claimTokens(address tokenAddress, address recipient)
+        external
+        override
+        onlyAssetManager
+    {
         _claimTokens(tokenAddress, recipient);
     }
 
@@ -148,15 +188,30 @@ contract AaveAdapter is Controller, IMoneyMarketAdapter {
         return balance;
     }
 
-    function getSupply(address tokenAddress) external view override returns (uint256) {
+    function getSupply(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         return _getSupply(tokenAddress);
     }
 
-    function getSupplyView(address tokenAddress) external view override returns (uint256) {
+    function getSupplyView(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         return _getSupply(tokenAddress);
     }
 
-    function supportsToken(address tokenAddress) external view override returns (bool) {
+    function supportsToken(address tokenAddress)
+        external
+        view
+        override
+        returns (bool)
+    {
         return _supportsToken(tokenAddress);
     }
 
@@ -167,7 +222,10 @@ contract AaveAdapter is Controller, IMoneyMarketAdapter {
     }
 
     function _claimTokens(address tokenAddress, address recipient) private {
-        require(recipient != address(0), "AaveAdapter: Recipient can not be zero");
+        require(
+            recipient != address(0),
+            "AaveAdapter: Recipient can not be zero"
+        );
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         uint256 balance = token.balanceOf(address(this));
         token.safeTransfer(recipient, balance);

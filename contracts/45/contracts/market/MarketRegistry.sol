@@ -19,15 +19,24 @@ contract MarketRegistry is Controller {
 
     event LogAddUToken(address indexed tokenAddress, address contractAddress);
 
-    event LogAddUserManager(address indexed tokenAddress, address contractAddress);
+    event LogAddUserManager(
+        address indexed tokenAddress,
+        address contractAddress
+    );
 
     modifier newToken(address token) {
-        require(tokens[token].uToken == address(0), "MarketRegistry: has already exist this uToken");
+        require(
+            tokens[token].uToken == address(0),
+            "MarketRegistry: has already exist this uToken"
+        );
         _;
     }
 
     modifier newUserManager(address token) {
-        require(tokens[token].userManager == address(0), "MarketRegistry: has already exist this userManager");
+        require(
+            tokens[token].userManager == address(0),
+            "MarketRegistry: has already exist this userManager"
+        );
         _;
     }
 
@@ -50,13 +59,21 @@ contract MarketRegistry is Controller {
         return userManagerList;
     }
 
-    function addUToken(address token, address uToken) public newToken(token) onlyAdmin {
+    function addUToken(address token, address uToken)
+        public
+        newToken(token)
+        onlyAdmin
+    {
         uTokenList.push(uToken);
         tokens[token].uToken = uToken;
         emit LogAddUToken(token, uToken);
     }
 
-    function addUserManager(address token, address userManager) public newUserManager(token) onlyAdmin {
+    function addUserManager(address token, address userManager)
+        public
+        newUserManager(token)
+        onlyAdmin
+    {
         userManagerList.push(userManager);
         tokens[token].userManager = userManager;
         emit LogAddUserManager(token, userManager);
@@ -93,7 +110,9 @@ contract MarketRegistry is Controller {
         }
 
         if (userManagerExist) {
-            userManagerList[userManagerIndex] = userManagerList[userManagerList.length - 1];
+            userManagerList[userManagerIndex] = userManagerList[
+                userManagerList.length - 1
+            ];
             userManagerList.pop();
         }
 

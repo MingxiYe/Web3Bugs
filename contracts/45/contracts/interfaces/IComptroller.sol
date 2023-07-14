@@ -11,13 +11,18 @@ interface IComptroller {
      *  @param account Account address
      *  @return Multiplier number (in wei)
      */
-    function getRewardsMultiplier(address account, address token) external view returns (uint256);
+    function getRewardsMultiplier(address account, address token)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Withdraw rewards
      *  @return Amount of rewards
      */
-    function withdrawRewards(address sender, address token) external returns (uint256);
+    function withdrawRewards(address sender, address token)
+        external
+        returns (uint256);
 
     function addFrozenCoinAge(
         address staker,
@@ -26,7 +31,9 @@ interface IComptroller {
         uint256 lastRepay
     ) external;
 
-    function updateTotalStaked(address token, uint256 totalStaked) external returns (bool);
+    function updateTotalStaked(address token, uint256 totalStaked)
+        external
+        returns (bool);
 
     /**
      *  @dev Calculate unclaimed rewards based on blocks
@@ -45,5 +52,8 @@ interface IComptroller {
      *  @param account Account address
      *  @return Unclaimed rewards
      */
-    function calculateRewards(address account, address token) external view returns (uint256);
+    function calculateRewards(address account, address token)
+        external
+        view
+        returns (uint256);
 }

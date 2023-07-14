@@ -18,14 +18,20 @@ interface IUserManager {
      *  @param account Member address
      *  @return Address array
      */
-    function getBorrowerAddresses(address account) external view returns (address[] memory);
+    function getBorrowerAddresses(address account)
+        external
+        view
+        returns (address[] memory);
 
     /**
      *  @dev Get member stakerAddresses
      *  @param account Member address
      *  @return Address array
      */
-    function getStakerAddresses(address account) external view returns (address[] memory);
+    function getStakerAddresses(address account)
+        external
+        view
+        returns (address[] memory);
 
     /**
      *  @dev Get member backer asset
@@ -68,7 +74,10 @@ interface IUserManager {
 
     function totalFrozen() external view returns (uint256);
 
-    function getFrozenCoinAge(address staker, uint256 pastBlocks) external view returns (uint256);
+    function getFrozenCoinAge(address staker, uint256 pastBlocks)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Add a new member
@@ -109,14 +118,20 @@ interface IUserManager {
      *  @param staker Staker address
      *  @return LockedStake
      */
-    function getTotalLockedStake(address staker) external view returns (uint256);
+    function getTotalLockedStake(address staker)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Get staker's defaulted / frozen staked token amount
      *  @param staker Staker address
      *  @return Frozen token amount
      */
-    function getTotalFrozenAmount(address staker) external view returns (uint256);
+    function getTotalFrozenAmount(address staker)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Update userManager locked info
@@ -156,7 +171,10 @@ interface IUserManager {
      */
     function updateTotalFrozen(address account, bool isOverdue) external;
 
-    function batchUpdateTotalFrozen(address[] calldata account, bool[] calldata isOverdue) external;
+    function batchUpdateTotalFrozen(
+        address[] calldata account,
+        bool[] calldata isOverdue
+    ) external;
 
     /**
      *  @dev Repay user's loan overdue, called only from the lending market

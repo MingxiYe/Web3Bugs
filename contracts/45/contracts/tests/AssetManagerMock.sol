@@ -34,7 +34,11 @@ contract AssetManagerMock is Controller {
 
     function __AssetManager_init() public initializer {}
 
-    function getPoolBalance(address tokenAddress) public view returns (uint256) {
+    function getPoolBalance(address tokenAddress)
+        public
+        view
+        returns (uint256)
+    {
         IERC20Upgradeable poolToken = IERC20Upgradeable(tokenAddress);
         uint256 balance = poolToken.balanceOf(address(this));
         if (isMarketSupported(tokenAddress)) {
@@ -44,9 +48,14 @@ contract AssetManagerMock is Controller {
         }
     }
 
-    function getLoanableAmount(address tokenAddress) public view returns (uint256) {
+    function getLoanableAmount(address tokenAddress)
+        public
+        view
+        returns (uint256)
+    {
         uint256 poolBalance = getPoolBalance(tokenAddress);
-        if (poolBalance > totalPrincipal[tokenAddress]) return poolBalance - totalPrincipal[tokenAddress];
+        if (poolBalance > totalPrincipal[tokenAddress])
+            return poolBalance - totalPrincipal[tokenAddress];
         return 0;
     }
 
@@ -86,13 +95,18 @@ contract AssetManagerMock is Controller {
         // If there are tokens in Asset Manager then transfer them on priority
         uint256 selfBalance = IERC20Upgradeable(token).balanceOf(address(this));
         if (selfBalance > 0) {
-            uint256 withdrawAmount = selfBalance < remaining ? selfBalance : remaining;
+            uint256 withdrawAmount = selfBalance < remaining
+                ? selfBalance
+                : remaining;
             remaining -= withdrawAmount;
             IERC20Upgradeable(token).safeTransfer(account, withdrawAmount);
         }
 
         if (!_isUToken(msg.sender, token)) {
-            balances[msg.sender][token] = balances[msg.sender][token] - amount + remaining;
+            balances[msg.sender][token] =
+                balances[msg.sender][token] -
+                amount +
+                remaining;
             totalPrincipal[token] = totalPrincipal[token] - amount + remaining;
         }
 

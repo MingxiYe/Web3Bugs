@@ -42,7 +42,10 @@ contract Treasury {
      * @return The amount of tokens dripped in this call
      */
     function drip(address target) public returns (uint256) {
-        require(tokenSchedules[target].target != address(0), "Target schedule doesn't exist");
+        require(
+            tokenSchedules[target].target != address(0),
+            "Target schedule doesn't exist"
+        );
         // First, read storage into memory
         IERC20 token_ = token;
         uint256 dripRate_ = tokenSchedules[target].dripRate;
@@ -56,7 +59,10 @@ contract Treasury {
         uint256 treasuryBalance_ = token_.balanceOf(address(this)); // TODO: Verify this is a static call
 
         // Next, calculate intermediate values
-        uint256 dripTotal_ = _min((blockNumber_ - dripStart_) * dripRate_, totalAmount_);
+        uint256 dripTotal_ = _min(
+            (blockNumber_ - dripStart_) * dripRate_,
+            totalAmount_
+        );
         uint256 deltaDrip_;
         if (dripTotal_ > dripped_) {
             deltaDrip_ = dripTotal_ - dripped_;
@@ -79,7 +85,10 @@ contract Treasury {
         address target_,
         uint256 amount_
     ) public onlyAdmin {
-        require(tokenSchedules[target_].target == address(0), "Target schedule already exists");
+        require(
+            tokenSchedules[target_].target == address(0),
+            "Target schedule already exists"
+        );
         Schedule memory schedule;
         schedule.dripStart = dripStart_;
         schedule.dripRate = dripRate_;
@@ -95,7 +104,10 @@ contract Treasury {
         address target_,
         uint256 amount_
     ) public onlyAdmin {
-        require(tokenSchedules[target_].target != address(0), "Target schedule doesn't exist");
+        require(
+            tokenSchedules[target_].target != address(0),
+            "Target schedule doesn't exist"
+        );
         tokenSchedules[target_].dripStart = dripStart_;
         tokenSchedules[target_].dripRate = dripRate_;
         tokenSchedules[target_].amount = amount_;

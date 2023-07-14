@@ -66,9 +66,17 @@ contract UserManagerMock {
         return limit;
     }
 
-    function getBorrowerAddresses(address account) public view returns (address[] memory) {}
+    function getBorrowerAddresses(address account)
+        public
+        view
+        returns (address[] memory)
+    {}
 
-    function getStakerAddresses(address account) public view returns (address[] memory) {}
+    function getStakerAddresses(address account)
+        public
+        view
+        returns (address[] memory)
+    {}
 
     function getBorrowerAsset(address account, address borrower)
         public
@@ -90,9 +98,17 @@ contract UserManagerMock {
         )
     {}
 
-    function getLockedStake(address staker, address borrower) public view returns (uint256) {}
+    function getLockedStake(address staker, address borrower)
+        public
+        view
+        returns (uint256)
+    {}
 
-    function getVouchingAmount(address staker, address borrower) public view returns (uint256) {}
+    function getVouchingAmount(address staker, address borrower)
+        public
+        view
+        returns (uint256)
+    {}
 
     function addMember(address account) public {}
 
@@ -138,7 +154,9 @@ contract UserManagerMock {
 
     function updateTotalFrozen(address, bool) external {}
 
-    function batchUpdateTotalFrozen(address[] calldata, bool[] calldata) external {}
+    function batchUpdateTotalFrozen(address[] calldata, bool[] calldata)
+        external
+    {}
 
     function repayLoanOverdue(
         address account,
@@ -149,5 +167,9 @@ contract UserManagerMock {
     //Only supports sumOfTrust
     function debtWriteOff(address borrower, uint256 amount) public {}
 
-    function getFrozenCoinAge(address staker, uint256 pastBlocks) public view returns (uint256) {}
+    function getFrozenCoinAge(address staker, uint256 pastBlocks)
+        public
+        view
+        returns (uint256)
+    {}
 }

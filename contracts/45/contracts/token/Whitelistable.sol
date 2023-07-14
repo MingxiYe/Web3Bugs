@@ -18,7 +18,10 @@ abstract contract Whitelistable is Ownable {
 
     modifier checkWhitelist() {
         if (whitelistEnabled) {
-            require(_whitelisted[msg.sender], "Whitelistable: address not whitelisted");
+            require(
+                _whitelisted[msg.sender],
+                "Whitelistable: address not whitelisted"
+            );
         }
         _;
     }

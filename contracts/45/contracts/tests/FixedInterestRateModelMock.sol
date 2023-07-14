@@ -13,7 +13,11 @@ contract FixedInterestRateModelMock {
         return interestRatePerBlock;
     }
 
-    function getSupplyRate(uint256 reserveFactorMantissa) public view returns (uint256) {
+    function getSupplyRate(uint256 reserveFactorMantissa)
+        public
+        view
+        returns (uint256)
+    {
         uint256 ratio = uint256(1e18) - reserveFactorMantissa;
         return (interestRatePerBlock * ratio) / 1e18;
     }

@@ -26,13 +26,22 @@ contract FixedInterestRateModel is Ownable, IInterestRateModel {
         return interestRatePerBlock;
     }
 
-    function getSupplyRate(uint256 reserveFactorMantissa) public view override returns (uint256) {
+    function getSupplyRate(uint256 reserveFactorMantissa)
+        public
+        view
+        override
+        returns (uint256)
+    {
         require(reserveFactorMantissa <= 1e18, "reserveFactorMantissa error");
         uint256 ratio = uint256(1e18) - reserveFactorMantissa;
         return (interestRatePerBlock * ratio) / 1e18;
     }
 
-    function setInterestRate(uint256 interestRatePerBlock_) external override onlyOwner {
+    function setInterestRate(uint256 interestRatePerBlock_)
+        external
+        override
+        onlyOwner
+    {
         interestRatePerBlock = interestRatePerBlock_;
         emit LogNewInterestParams(interestRatePerBlock_);
     }

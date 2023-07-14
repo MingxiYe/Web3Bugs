@@ -56,7 +56,9 @@ contract MarketRegistryMock is Initializable {
         }
 
         if (userManagerExist) {
-            userManagerList[userManagerIndex] = userManagerList[userManagerList.length - 1];
+            userManagerList[userManagerIndex] = userManagerList[
+                userManagerList.length - 1
+            ];
             userManagerList.pop();
         }
 

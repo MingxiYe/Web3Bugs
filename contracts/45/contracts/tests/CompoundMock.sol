@@ -10,7 +10,10 @@ contract CompoundMock is Initializable, ERC20Upgradeable {
     uint256 public constant EXCHANGE_RATE = 1e18;
     IERC20Upgradeable public underlyingToken;
 
-    function __CompoundMock_init(uint256 _rate, address _underlyingToken) public initializer {
+    function __CompoundMock_init(uint256 _rate, address _underlyingToken)
+        public
+        initializer
+    {
         rate = _rate;
         underlyingToken = IERC20Upgradeable(_underlyingToken);
     }
@@ -25,7 +28,10 @@ contract CompoundMock is Initializable, ERC20Upgradeable {
         return 0;
     }
 
-    function mintOther(address account, uint256 mintAmount) external returns (uint256) {
+    function mintOther(address account, uint256 mintAmount)
+        external
+        returns (uint256)
+    {
         underlyingToken.transferFrom(msg.sender, address(this), mintAmount);
         _mint(account, (mintAmount * EXCHANGE_RATE) / 10**18);
         return 0;
@@ -37,7 +43,11 @@ contract CompoundMock is Initializable, ERC20Upgradeable {
         return 0;
     }
 
-    function balanceOfUnderlying(address owner) external view returns (uint256) {
+    function balanceOfUnderlying(address owner)
+        external
+        view
+        returns (uint256)
+    {
         return (balanceOf(owner) * EXCHANGE_RATE) / 10**18;
     }
 

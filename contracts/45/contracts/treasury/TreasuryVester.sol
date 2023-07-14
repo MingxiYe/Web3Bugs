@@ -43,7 +43,9 @@ contract TreasuryVester {
         if (block.timestamp >= vestingEnd) {
             amount = IERC20(unionToken).balanceOf(address(this));
         } else {
-            amount = (vestingAmount * (block.timestamp - lastUpdate)) / (vestingEnd - vestingBegin);
+            amount =
+                (vestingAmount * (block.timestamp - lastUpdate)) /
+                (vestingEnd - vestingBegin);
             lastUpdate = block.timestamp;
         }
         IERC20(unionToken).safeTransfer(recipient, amount);

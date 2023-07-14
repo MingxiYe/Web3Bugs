@@ -16,7 +16,12 @@ contract CreditLimitByMedian is Ownable, ICreditLimitModel {
         effectiveNumber = effectiveNumber_;
     }
 
-    function getCreditLimit(uint256[] memory vouchs) public view override returns (uint256) {
+    function getCreditLimit(uint256[] memory vouchs)
+        public
+        view
+        override
+        returns (uint256)
+    {
         if (vouchs.length >= effectiveNumber) {
             return _findMedian(vouchs);
         } else {
@@ -37,7 +42,9 @@ contract CreditLimitByMedian is Ownable, ICreditLimitModel {
             for (uint256 i = 0; i < array.length; i++) {
                 uint256 remainingVouchingAmount;
                 if (array[i].vouchingAmount > array[i].lockedAmount) {
-                    remainingVouchingAmount = array[i].vouchingAmount - array[i].lockedAmount;
+                    remainingVouchingAmount =
+                        array[i].vouchingAmount -
+                        array[i].lockedAmount;
                 } else {
                     remainingVouchingAmount = 0;
                 }
@@ -46,13 +53,17 @@ contract CreditLimitByMedian is Ownable, ICreditLimitModel {
                     if (array[i].availableStakingAmount > amount) {
                         newLockedAmount = array[i].lockedAmount + amount;
                     } else {
-                        newLockedAmount = array[i].lockedAmount + array[i].availableStakingAmount;
+                        newLockedAmount =
+                            array[i].lockedAmount +
+                            array[i].availableStakingAmount;
                     }
                 } else {
                     if (remainingVouchingAmount > amount) {
                         newLockedAmount = array[i].lockedAmount + amount;
                     } else {
-                        newLockedAmount = array[i].lockedAmount + remainingVouchingAmount;
+                        newLockedAmount =
+                            array[i].lockedAmount +
+                            remainingVouchingAmount;
                     }
                 }
 
@@ -86,7 +97,11 @@ contract CreditLimitByMedian is Ownable, ICreditLimitModel {
      *  @param array array
      *  @return uint256
      */
-    function _findMedian(uint256[] memory array) private pure returns (uint256) {
+    function _findMedian(uint256[] memory array)
+        private
+        pure
+        returns (uint256)
+    {
         uint256[] memory arr = _sortArray(array);
         if (arr.length == 0) return 0;
 
@@ -104,7 +119,11 @@ contract CreditLimitByMedian is Ownable, ICreditLimitModel {
      *  @param arr array
      *  @return uint256 array
      */
-    function _sortArray(uint256[] memory arr) private pure returns (uint256[] memory) {
+    function _sortArray(uint256[] memory arr)
+        private
+        pure
+        returns (uint256[] memory)
+    {
         uint256 length = arr.length;
 
         for (uint256 i = 0; i < length; i++) {

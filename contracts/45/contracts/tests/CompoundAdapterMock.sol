@@ -33,7 +33,11 @@ contract CompoundAdapterMock is Initializable {
         return isSupport;
     }
 
-    function getSupplyView(address tokenAddress) external view returns (uint256) {
+    function getSupplyView(address tokenAddress)
+        external
+        view
+        returns (uint256)
+    {
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         return token.balanceOf(address(this));
     }

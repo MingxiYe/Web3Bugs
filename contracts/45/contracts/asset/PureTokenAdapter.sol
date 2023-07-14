@@ -15,12 +15,18 @@ contract PureTokenAdapter is Controller, IMoneyMarketAdapter {
     mapping(address => uint256) public override ceilingMap;
 
     modifier checkTokenSupported(address tokenAddress) {
-        require(_supportsToken(tokenAddress), "PureTokenAdapter: token not supported");
+        require(
+            _supportsToken(tokenAddress),
+            "PureTokenAdapter: token not supported"
+        );
         _;
     }
 
     modifier onlyAssetManager() {
-        require(msg.sender == assetManager, "PureTokenAdapter: only asset manager can call");
+        require(
+            msg.sender == assetManager,
+            "PureTokenAdapter: only asset manager can call"
+        );
         _;
     }
 
@@ -37,7 +43,10 @@ contract PureTokenAdapter is Controller, IMoneyMarketAdapter {
         floorMap[tokenAddress] = floor;
     }
 
-    function setCeiling(address tokenAddress, uint256 ceiling) external onlyAdmin {
+    function setCeiling(address tokenAddress, uint256 ceiling)
+        external
+        onlyAdmin
+    {
         ceilingMap[tokenAddress] = ceiling;
     }
 
@@ -46,7 +55,12 @@ contract PureTokenAdapter is Controller, IMoneyMarketAdapter {
     }
 
     // solhint-disable-next-line no-empty-blocks
-    function deposit(address tokenAddress) external view override checkTokenSupported(tokenAddress) {
+    function deposit(address tokenAddress)
+        external
+        view
+        override
+        checkTokenSupported(tokenAddress)
+    {
         // Don't have to do anything because AssetManager already transfered tokens here
     }
 
@@ -69,27 +83,47 @@ contract PureTokenAdapter is Controller, IMoneyMarketAdapter {
         token.safeTransfer(recipient, token.balanceOf(address(this)));
     }
 
-    function claimTokens(address tokenAddress, address recipient) external override onlyAssetManager {
+    function claimTokens(address tokenAddress, address recipient)
+        external
+        override
+        onlyAssetManager
+    {
         _claimTokens(tokenAddress, recipient);
     }
 
-    function getSupply(address tokenAddress) external view override returns (uint256) {
+    function getSupply(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         return token.balanceOf(address(this));
     }
 
-    function getSupplyView(address tokenAddress) external view override returns (uint256) {
+    function getSupplyView(address tokenAddress)
+        external
+        view
+        override
+        returns (uint256)
+    {
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
         return token.balanceOf(address(this));
     }
 
-    function supportsToken(address tokenAddress) external view override returns (bool) {
+    function supportsToken(address tokenAddress)
+        external
+        view
+        override
+        returns (bool)
+    {
         return _supportsToken(tokenAddress);
     }
 
     function _supportsToken(address tokenAddress) internal view returns (bool) {
         IERC20Upgradeable token = IERC20Upgradeable(tokenAddress);
-        return tokenAddress != address(0) && token.balanceOf(address(this)) >= 0; // simple check if the token is ERC20 compatible
+        return
+            tokenAddress != address(0) && token.balanceOf(address(this)) >= 0; // simple check if the token is ERC20 compatible
     }
 
     function _claimTokens(address tokenAddress, address recipient) private {

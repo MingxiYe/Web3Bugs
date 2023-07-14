@@ -32,5 +32,8 @@ interface ICreditLimitModel {
      * @notice Calculates the member credit limit by vouchs
      * @return Member credit limit
      */
-    function getCreditLimit(uint256[] calldata vouchs) external view returns (uint256);
+    function getCreditLimit(uint256[] calldata vouchs)
+        external
+        view
+        returns (uint256);
 }

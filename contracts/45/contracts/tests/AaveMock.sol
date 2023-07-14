@@ -14,7 +14,10 @@ contract AaveMock is Initializable {
     uint128 public rate;
     address public aToken;
 
-    function __AaveMock_init(uint128 _rate, address _aToken) public initializer {
+    function __AaveMock_init(uint128 _rate, address _aToken)
+        public
+        initializer
+    {
         rate = _rate;
         aToken = _aToken;
     }
@@ -37,7 +40,20 @@ contract AaveMock is Initializable {
             uint8
         )
     {
-        return (0, 0, 0, rate, 0, 0, 0, aToken, address(0), address(0), address(0), 0);
+        return (
+            0,
+            0,
+            0,
+            rate,
+            0,
+            0,
+            0,
+            aToken,
+            address(0),
+            address(0),
+            address(0),
+            0
+        );
     }
 
     function deposit(

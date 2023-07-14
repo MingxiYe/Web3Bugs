@@ -76,7 +76,10 @@ interface IUToken {
      *  @param account Member address
      *  @return Interest amount
      */
-    function calculatingInterest(address account) external view returns (uint256);
+    function calculatingInterest(address account)
+        external
+        view
+        returns (uint256);
 
     /**
      *  @dev Get a member's current owed balance, including the principle and interest but without updating the user's states.
