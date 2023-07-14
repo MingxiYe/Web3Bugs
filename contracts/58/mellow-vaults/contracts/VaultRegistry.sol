@@ -121,7 +121,7 @@ contract VaultRegistry is IVaultRegistry, ERC721 {
         address,
         address,
         uint256 tokenId
-    ) internal view override {
+    ) internal view {
         require(!_locks[tokenId], ExceptionsLibrary.LOCKED_NFT);
     }
 
