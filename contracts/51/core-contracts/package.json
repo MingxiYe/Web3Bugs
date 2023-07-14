@@ -1,0 +1,17 @@
+{
+  "name": "core-contracts",
+  "version": "1.0.0",
+  "description": "Core contract, written in Vyper & Solidity.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.16.1"
+  }
+}
