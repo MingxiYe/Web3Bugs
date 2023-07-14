@@ -1,7 +1,8 @@
 pragma solidity ^0.8.0;
 
 import "./HEVMState.sol";
-import "solmate/tokens/ERC20.sol";
+import "../../../lib/solmate/src/tokens/ERC20.sol";
+
 import { HEVMHelpers } from "./HEVMHelpers.sol";
 
 interface Checkpointing {

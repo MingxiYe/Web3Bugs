@@ -1,6 +1,6 @@
 pragma solidity >=0.8.0;
 
-import "ds-test/test.sol";
+import "../../../lib/ds-test/src/test.sol";
 import "./HEVMState.sol";
 
 contract HEVMHelpers is HEVMState, DSTest {

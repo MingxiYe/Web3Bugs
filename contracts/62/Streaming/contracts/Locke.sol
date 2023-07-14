@@ -2,8 +2,8 @@
 pragma solidity ^0.8.0;
 
 import "./LockeERC20.sol";
-import "solmate/utils/SafeTransferLib.sol";
-import "solmate/tokens/ERC20.sol";
+import "../lib/solmate/src/utils/SafeTransferLib.sol";
+import "../lib/solmate/src/tokens/ERC20.sol";
 
 // ====== Governance =====
 contract Governed {

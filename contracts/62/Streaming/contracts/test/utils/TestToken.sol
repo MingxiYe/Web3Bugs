@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "solmate/tokens/ERC20.sol";
+import "../../../lib/solmate/src/tokens/ERC20.sol";
 
 contract TestToken is ERC20 {
 

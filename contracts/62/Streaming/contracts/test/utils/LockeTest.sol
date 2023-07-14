@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "../../Locke.sol";
 import { TestHelpers } from "./TestHelpers.sol";
-import "solmate/tokens/ERC20.sol";
+import "../../../lib/solmate/src/tokens/ERC20.sol";
 import "./TestToken.sol";
 
 contract User is TestHelpers{
