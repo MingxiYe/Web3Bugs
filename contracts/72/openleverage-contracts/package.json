@@ -21,6 +21,7 @@
     "ethers": "^5.5.1",
     "ganache-cli": "6.12.2",
     "ganache-time-traveler": "^1.0.15",
+    "hardhat": "^2.17.0",
     "keccak256": "^1.0.3",
     "lodash.template": "^4.5.0",
     "merkletreejs": "^0.2.24",
@@ -28,7 +29,7 @@
     "truffle": "^5.4.7",
     "truffle-contract-size": "^2.0.1"
   },
-  "bundleDependencies": false,
+  "bundleDependencies": [],
   "devDependencies": {
     "@truffle/hdwallet-provider": "^1.5.1",
     "eth-gas-reporter": "^0.2.20",
