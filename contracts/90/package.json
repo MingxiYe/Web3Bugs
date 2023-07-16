@@ -1,0 +1,19 @@
+{
+  "name": "90",
+  "version": "1.0.0",
+  "description": "- $28,500 USDC main award pot - $1,500 USDC gas optimization award pot - Join [C4 Discord](https://discord.gg/code4rena) to register - Submit findings [using the C4 form](https://code4rena.com/contests/2022-04-phuture-finance-contest/submit) - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens) - Starts April 19, 2022 00:00 UTC - Ends April 21, 2022 23:59 UTC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@chainlink/contracts": "^0.6.1",
+    "@openzeppelin/contracts": "^4.9.2",
+    "@openzeppelin/contracts-upgradeable": "^4.9.2",
+    "@uniswap/v2-core": "^1.0.1",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
+    "hardhat": "^2.17.0"
+  }
+}
