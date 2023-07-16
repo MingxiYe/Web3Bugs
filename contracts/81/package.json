@@ -7,9 +7,11 @@
     "test": "tests"
   },
   "dependencies": {
-    "hardhat": "^2.7.0"
+    "@openzeppelin/contracts": "^4.9.2",
+    "@openzeppelin/contracts-upgradeable": "^4.9.2",
+    "hardhat": "^2.7.0",
+    "@openzeppelin-0.7/contracts": "npm:@openzeppelin/contracts@^3.4.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "mocha"
   },
