@@ -13,8 +13,8 @@
     "hardhat": "^2.9.1"
   },
   "dependencies": {
-    "@chestrnft/royalty-vault": "git+ssh://git@github.com/ChestrNFT/royalty-vault.git#development",
-    "@chestrnft/splits": "git+ssh://git@github.com/ChestrNFT/splits.git#development",
+    "@chestrnft/royalty-vault": "git+https://github.com/ChestrNFT/royalty-vault.git#development",
+    "@chestrnft/splits": "git+https://github.com/ChestrNFT/splits.git#development",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@openzeppelin/contracts": "^4.4.2",
     "@openzeppelin/hardhat-upgrades": "^1.16.1",
