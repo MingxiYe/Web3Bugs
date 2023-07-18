@@ -31,6 +31,7 @@
     "build/interfaces/*"
   ],
   "dependencies": {
+    "@chainlink/contracts": "^0.6.1",
     "@openzeppelin/contracts": "^4.5.0",
     "@openzeppelin/contracts-upgradeable": "^4.5.1"
   }
